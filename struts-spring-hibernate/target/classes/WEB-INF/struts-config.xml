@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?> <!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.2//EN" "http://struts.apache.org/dtds/struts-config_1_2.dtd">
+<struts-config>
+
+	<form-beans>
+		<form-bean name="personaForm" type="org.apache.struts.action.DynaActionForm">
+			<form-property name="persona"
+				type="mx.com.gm.capadatos.domain.Persona" />
+		</form-bean>
+	</form-beans>
+	<global-forwards>
+		<forward name="inicio" path="/inicio.do" />
+		<forward name="listar" path="/inicio.do" />
+	</global-forwards>
+	
+	<action-mappings>
+		<action parameter="metodo" path="/inicio"
+			type="org.springframework.web.struts.DelegatingActionProxy" validate="false">
+			<forward name="listar" path="/WEB-INF/pages/listarPersonas.jsp" />
+		</action>
+		<action name="personaForm" parameter="metodo" path="/detalle"
+			scope="request" type="org.springframework.web.struts.DelegatingActionProxy"
+			validate="false">
+			<forward name="editar" path="/WEB-INF/pages/detallePersona.jsp" />
+		</action>
+		<action name="personaForm" parameter="metodo" path="/guardar"
+			scope="request" type="org.springframework.web.struts.DelegatingActionProxy"
+			validate="false">
+		</action>
+	</action-mappings>
+	
+	<message-resources parameter="mensajes" /> 
+	
+	<!-- Spring Struts plugin for production -->
+	<plug-in className="org.springframework.web.struts.ContextLoaderPlugIn">
+		<set-property property="contextConfigLocation"
+			value="/WEB-INF/classes/applicationContext.xml,/WEB-INF/classes/datasource-test.xml" />
+	</plug-in>
+
+</struts-config>
